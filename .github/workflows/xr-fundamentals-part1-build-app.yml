@@ -26,8 +26,8 @@ jobs:
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
-        working-directory: ./xr-codelabs/xr-fundamentals/part1
+        working-directory: xr-fundamentals/part1
 
       - name: Build app
-        working-directory: ./xr-codelabs/xr-fundamentals/part1
+        working-directory: xr-fundamentals/part1
         run: ./gradlew :app:assembleDebug
