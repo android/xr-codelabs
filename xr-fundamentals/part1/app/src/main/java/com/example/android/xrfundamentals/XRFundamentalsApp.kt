@@ -30,6 +30,8 @@ import androidx.compose.ui.unit.dp
 import androidx.window.core.layout.WindowSizeClass
 import androidx.window.core.layout.WindowWidthSizeClass
 import androidx.xr.compose.spatial.Subspace
+import androidx.xr.compose.subspace.DragPolicy
+import androidx.xr.compose.subspace.MovePolicy
 import androidx.xr.compose.subspace.SpatialCurvedRow
 import androidx.xr.compose.subspace.SpatialPanel
 import androidx.xr.compose.subspace.layout.SubspaceModifier
@@ -104,8 +106,8 @@ fun XRFundamentalsApp(
             SpatialPanel(
                 modifier = SubspaceModifier
                     .width(340.dp)
-                    .height(800.dp)
-                    .movable(true)
+                    .height(800.dp),
+                dragPolicy = MovePolicy()
             ) {
                 Surface {
                     SecondaryCardList(

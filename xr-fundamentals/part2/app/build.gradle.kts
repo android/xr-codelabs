@@ -22,12 +22,12 @@ plugins {
 
 android {
     namespace = "com.example.android.xrfundamentals"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.android.xrfundamentals"
         minSdk = 34
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -67,7 +67,6 @@ dependencies {
     implementation(libs.androidx.material3.adaptive)
     implementation(libs.androidx.xr.compose)
     implementation(libs.androidx.xr.scenecore)
-    implementation(libs.jetbrains.kotlinx.coroutines.guava)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

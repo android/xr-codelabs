@@ -1,17 +1,16 @@
 [versions]
-agp = "8.13.0-alpha03"
-kotlin = "2.2.0"
-coreKtx = "1.16.0"
+agp = "8.13.0"
+kotlin = "2.2.20"
+coreKtx = "1.17.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
-lifecycleRuntimeKtx = "2.9.2"
-activityCompose = "1.10.1"
-composeBom = "2025.07.00"
+lifecycleRuntimeKtx = "2.9.4"
+activityCompose = "1.11.0"
+composeBom = "2025.10.00"
 composeMaterialAdaptive = "1.1.0"
-xrCompose = "1.0.0-alpha05"
-xrSceneCore = "1.0.0-alpha05"
-kotlinxCoroutinesGuava = "1.10.2"
+xrCompose = "1.0.0-alpha07"
+xrSceneCore = "1.0.0-alpha07"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -31,7 +30,6 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-material3-adaptive = { group = "androidx.compose.material3.adaptive", name = "adaptive", version.ref = "composeMaterialAdaptive" }
 androidx-xr-compose = { group = "androidx.xr.compose", name = "compose", version.ref = "xrCompose" }
 androidx-xr-scenecore = { group = "androidx.xr.scenecore", name = "scenecore", version.ref = "xrSceneCore"}
-jetbrains-kotlinx-coroutines-guava = {group = "org.jetbrains.kotlinx", name="kotlinx-coroutines-guava", version.ref = "kotlinxCoroutinesGuava"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
