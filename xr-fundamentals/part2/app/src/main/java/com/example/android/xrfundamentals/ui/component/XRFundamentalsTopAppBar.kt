@@ -31,13 +31,20 @@ import androidx.xr.compose.spatial.OrbiterOffsetType
 import androidx.xr.compose.subspace.layout.SpatialRoundedCornerShape
 import com.example.android.xrfundamentals.R
 
+// The Orbiter API is pending additional changes, we recommend suppressing the deprecation notices.
+// See the Jetpack Compose for XR release notes for more details at:
+// https://developer.android.com/jetpack/androidx/releases/xr-compose#1.0.0-alpha13
+@Suppress("DEPRECATION")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun XRFundamentalsTopAppBar() {
+fun XRFundamentalsTopAppBar(
+    onHomeSpaceRequested: () -> Unit,
+    onFullSpaceRequested: () -> Unit,
+) {
     TopAppBar(
         title = { Text(stringResource(R.string.app_name)) },
         actions = {
-            // Only show the mode toggle if the device supports spatial UI
+            // Only show the space toggle if the device supports spatial UI
             if (LocalSpatialConfiguration.current.hasXrSpatialFeature) {
                 Orbiter(
                     position = ContentEdge.Top,
@@ -48,7 +55,7 @@ fun XRFundamentalsTopAppBar() {
                         CornerSize(percent = 100)
                     ),
                 ) {
-                    ToggleSpaceModeButton()
+                    ToggleSpaceButton(onHomeSpaceRequested, onFullSpaceRequested)
                 }
             }
         }

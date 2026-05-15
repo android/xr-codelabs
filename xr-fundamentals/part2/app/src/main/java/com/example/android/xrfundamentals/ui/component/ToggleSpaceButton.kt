@@ -24,33 +24,34 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.xr.compose.platform.LocalSpatialCapabilities
-import androidx.xr.compose.platform.LocalSpatialConfiguration
 import com.example.android.xrfundamentals.R
 import com.example.android.xrfundamentals.ui.theme.XRFundamentalsTheme
 
 @Composable
-fun ToggleSpaceModeButton(modifier: Modifier = Modifier) {
-    val spatialConfiguration = LocalSpatialConfiguration.current
-
+fun ToggleSpaceButton(
+    onHomeSpaceRequested: () -> Unit,
+    onFullSpaceRequested: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     if (LocalSpatialCapabilities.current.isSpatialUiEnabled) {
-        ToggleSpaceModeButton(
+        ToggleSpaceButton(
             modifier = modifier,
-            contentDescription = "Request Home Space mode",
-            iconResource = R.drawable.ic_home_space_mode,
-            onClick = { spatialConfiguration.requestHomeSpaceMode() }
+            contentDescription = "Request Home Space",
+            iconResource = R.drawable.ic_home_space,
+            onClick = { onHomeSpaceRequested() }
         )
     } else {
-        ToggleSpaceModeButton(
+        ToggleSpaceButton(
             modifier = modifier,
-            contentDescription = "Request Full Space mode",
-            iconResource = R.drawable.ic_full_space_mode,
-            onClick = { spatialConfiguration.requestFullSpaceMode() }
+            contentDescription = "Request Full Space",
+            iconResource = R.drawable.ic_full_space,
+            onClick = { onFullSpaceRequested() }
         )
     }
 }
 
 @Composable
-fun ToggleSpaceModeButton(
+fun ToggleSpaceButton(
     contentDescription: String,
     @DrawableRes iconResource: Int,
     onClick: () -> Unit,
@@ -69,11 +70,11 @@ fun ToggleSpaceModeButton(
 
 @Preview
 @Composable
-fun ToggleSpaceModeButtonPreview() {
+fun ToggleSpaceButtonPreview() {
     XRFundamentalsTheme {
-        ToggleSpaceModeButton(
+        ToggleSpaceButton(
             "Preview",
-            R.drawable.ic_full_space_mode,
+            R.drawable.ic_full_space,
             onClick = {}
         )
     }

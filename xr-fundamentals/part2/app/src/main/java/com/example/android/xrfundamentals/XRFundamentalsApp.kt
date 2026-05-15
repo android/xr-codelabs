@@ -26,14 +26,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.window.core.layout.WindowSizeClass
-import androidx.window.core.layout.WindowWidthSizeClass
 import androidx.xr.compose.platform.LocalSession
 import androidx.xr.compose.platform.LocalSpatialCapabilities
 import androidx.xr.compose.spatial.Subspace
@@ -41,6 +40,8 @@ import androidx.xr.compose.subspace.SpatialCurvedRow
 import androidx.xr.compose.subspace.SpatialPanel
 import androidx.xr.compose.subspace.layout.SubspaceModifier
 import androidx.xr.compose.subspace.layout.height
+import androidx.xr.compose.subspace.layout.movable
+import androidx.xr.compose.subspace.layout.resizable
 import androidx.xr.compose.subspace.layout.width
 import androidx.xr.scenecore.scene
 import com.example.android.xrfundamentals.environment.ENVIRONMENT_OPTIONS
@@ -54,28 +55,24 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun XRFundamentalsApp(
-    windowSizeClass: WindowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
+    windowSizeClass: WindowSizeClass = currentWindowAdaptiveInfo().windowSizeClass,
+    onHomeSpaceRequested: () -> Unit,
+    onFullSpaceRequested: () -> Unit,
 ) {
 
     Scaffold(
-        topBar = { XRFundamentalsTopAppBar() }
+        topBar = { XRFundamentalsTopAppBar(onHomeSpaceRequested, onFullSpaceRequested) }
     ) { innerPadding ->
 
         val modifier = Modifier
             .padding(innerPadding)
             .fillMaxSize()
 
-        if (windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.COMPACT) {
-            CompactLayout(
-                modifier = modifier,
-                primaryContent = {
-                    PrimaryCard()
-                },
-                secondaryContent = {
-                    SecondaryCardList()
-                }
-            )
-        } else {
+        val isExpanded = windowSizeClass.isWidthAtLeastBreakpoint(
+            WindowSizeClass.WIDTH_DP_EXPANDED_LOWER_BOUND
+        )
+
+        if (isExpanded) {
             ExpandedLayout(
                 modifier = modifier,
                 primaryContent = {
@@ -89,10 +86,20 @@ fun XRFundamentalsApp(
                     )
                 }
             )
+        } else {
+            CompactLayout(
+                modifier = modifier,
+                primaryContent = {
+                    PrimaryCard()
+                },
+                secondaryContent = {
+                    SecondaryCardList()
+                }
+            )
         }
     }
 
-    var currentEnvironmentOptionIndex by remember { mutableStateOf(0) }
+    var currentEnvironmentOptionIndex by remember { mutableIntStateOf(0) }
     Subspace {
         val session = checkNotNull(LocalSession.current)
         val scope = rememberCoroutineScope()
@@ -125,7 +132,7 @@ fun XRFundamentalsApp(
                 }
 
                 Scaffold(
-                    topBar = { XRFundamentalsTopAppBar() }
+                    topBar = { XRFundamentalsTopAppBar(onHomeSpaceRequested, onFullSpaceRequested) }
                 ) { innerPadding ->
                     Box(Modifier.padding(innerPadding)) {
                         PrimaryCard(
@@ -140,6 +147,8 @@ fun XRFundamentalsApp(
                 modifier = SubspaceModifier
                     .width(340.dp)
                     .height(800.dp)
+                    .movable()
+                    .resizable(),
             ) {
                 Surface {
                     SecondaryCardList(
