@@ -25,7 +25,6 @@ import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.window.core.layout.WindowSizeClass
-import androidx.window.core.layout.WindowWidthSizeClass
 import com.example.android.xrfundamentals.ui.component.PrimaryCard
 import com.example.android.xrfundamentals.ui.component.SecondaryCardList
 import com.example.android.xrfundamentals.ui.component.XRFundamentalsTopAppBar
@@ -43,18 +42,10 @@ fun XRFundamentalsApp(
         val modifier = Modifier
             .padding(innerPadding)
             .fillMaxSize()
-
-        if (windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.COMPACT) {
-            CompactLayout(
-                modifier = modifier,
-                primaryContent = {
-                    PrimaryCard()
-                },
-                secondaryContent = {
-                    SecondaryCardList()
-                }
-            )
-        } else {
+        val isExpanded = windowSizeClass.isWidthAtLeastBreakpoint(
+            WindowSizeClass.WIDTH_DP_EXPANDED_LOWER_BOUND
+        )
+        if (isExpanded) {
             ExpandedLayout(
                 modifier = modifier,
                 primaryContent = {
@@ -66,6 +57,16 @@ fun XRFundamentalsApp(
                     SecondaryCardList(
                         modifier = Modifier.verticalScroll(rememberScrollState())
                     )
+                }
+            )
+        } else {
+            CompactLayout(
+                modifier = modifier,
+                primaryContent = {
+                    PrimaryCard()
+                },
+                secondaryContent = {
+                    SecondaryCardList()
                 }
             )
         }

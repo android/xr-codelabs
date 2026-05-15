@@ -42,5 +42,5 @@ data class EnvironmentOption(val name: String, val skyboxPath: String?, val geom
 
 val ENVIRONMENT_OPTIONS = listOf(
     EnvironmentOption("Default", null, null),
-    EnvironmentOption("Green Hills", null, "green_hills_ktx2_mipmap.glb")
+    EnvironmentOption("Green Hills", "green_hills_ibl.zip", "green_hills_ktx2_mipmap.glb")
 )

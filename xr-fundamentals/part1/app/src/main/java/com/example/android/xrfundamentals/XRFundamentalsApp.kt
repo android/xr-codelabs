@@ -28,15 +28,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.window.core.layout.WindowSizeClass
-import androidx.window.core.layout.WindowWidthSizeClass
 import androidx.xr.compose.spatial.Subspace
-import androidx.xr.compose.subspace.DragPolicy
-import androidx.xr.compose.subspace.MovePolicy
 import androidx.xr.compose.subspace.SpatialCurvedRow
 import androidx.xr.compose.subspace.SpatialPanel
 import androidx.xr.compose.subspace.layout.SubspaceModifier
 import androidx.xr.compose.subspace.layout.height
 import androidx.xr.compose.subspace.layout.movable
+import androidx.xr.compose.subspace.layout.resizable
 import androidx.xr.compose.subspace.layout.width
 import com.example.android.xrfundamentals.ui.component.PrimaryCard
 import com.example.android.xrfundamentals.ui.component.SecondaryCardList
@@ -46,27 +44,21 @@ import com.example.android.xrfundamentals.ui.layout.ExpandedLayout
 
 @Composable
 fun XRFundamentalsApp(
-    windowSizeClass: WindowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
+    windowSizeClass: WindowSizeClass = currentWindowAdaptiveInfo().windowSizeClass,
+    onHomeSpaceRequested: () -> Unit,
+    onFullSpaceRequested: () -> Unit,
 ) {
     Scaffold(
-        topBar = { XRFundamentalsTopAppBar() }
+        topBar = { XRFundamentalsTopAppBar(onHomeSpaceRequested, onFullSpaceRequested) }
     ) { innerPadding ->
 
         val modifier = Modifier
             .padding(innerPadding)
             .fillMaxSize()
-
-        if (windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.COMPACT) {
-            CompactLayout(
-                modifier = modifier,
-                primaryContent = {
-                    PrimaryCard()
-                },
-                secondaryContent = {
-                    SecondaryCardList()
-                }
-            )
-        } else {
+        val isExpanded = windowSizeClass.isWidthAtLeastBreakpoint(
+            WindowSizeClass.WIDTH_DP_EXPANDED_LOWER_BOUND
+        )
+        if (isExpanded) {
             ExpandedLayout(
                 modifier = modifier,
                 primaryContent = {
@@ -78,6 +70,16 @@ fun XRFundamentalsApp(
                     SecondaryCardList(
                         modifier = Modifier.verticalScroll(rememberScrollState())
                     )
+                }
+            )
+        } else {
+            CompactLayout(
+                modifier = modifier,
+                primaryContent = {
+                    PrimaryCard()
+                },
+                secondaryContent = {
+                    SecondaryCardList()
                 }
             )
         }
@@ -92,7 +94,7 @@ fun XRFundamentalsApp(
                     .height(800.dp)
             ) {
                 Scaffold(
-                    topBar = { XRFundamentalsTopAppBar() }
+                    topBar = { XRFundamentalsTopAppBar(onHomeSpaceRequested, onFullSpaceRequested) }
                 ) { innerPadding ->
                     Box(Modifier.padding(innerPadding)) {
                         PrimaryCard(
@@ -106,8 +108,9 @@ fun XRFundamentalsApp(
             SpatialPanel(
                 modifier = SubspaceModifier
                     .width(340.dp)
-                    .height(800.dp),
-                dragPolicy = MovePolicy()
+                    .height(800.dp)
+                    .movable()
+                    .resizable(),
             ) {
                 Surface {
                     SecondaryCardList(

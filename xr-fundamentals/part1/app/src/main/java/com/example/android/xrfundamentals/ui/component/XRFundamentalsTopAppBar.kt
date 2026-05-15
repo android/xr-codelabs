@@ -25,13 +25,17 @@ import androidx.xr.compose.platform.LocalSpatialConfiguration
 import com.example.android.xrfundamentals.R
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Composable fun XRFundamentalsTopAppBar() {
+@Composable
+fun XRFundamentalsTopAppBar(
+    onHomeSpaceRequested: () -> Unit,
+    onFullSpaceRequested: () -> Unit,
+) {
     TopAppBar(
         title = { Text(stringResource(R.string.app_name)) },
         actions = {
-            // Only show the mode toggle if the device supports spatial UI
+            // Only show the space toggle if the device supports spatial UI
             if (LocalSpatialConfiguration.current.hasXrSpatialFeature) {
-                ToggleSpaceModeButton()
+                ToggleSpaceButton(onHomeSpaceRequested, onFullSpaceRequested)
             }
         }
     )

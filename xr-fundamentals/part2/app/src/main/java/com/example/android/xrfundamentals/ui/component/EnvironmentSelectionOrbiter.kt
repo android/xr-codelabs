@@ -32,6 +32,10 @@ import androidx.xr.compose.spatial.OrbiterOffsetType
 import androidx.xr.compose.subspace.layout.SpatialRoundedCornerShape
 import com.example.android.xrfundamentals.R
 
+// The Orbiter API is pending additional changes, we recommend suppressing the deprecation notices.
+// See the Jetpack Compose for XR release notes for more details at:
+// https://developer.android.com/jetpack/androidx/releases/xr-compose#1.0.0-alpha13
+@Suppress("DEPRECATION")
 @Composable
 fun EnvironmentSelectionOrbiter(
     modifier: Modifier = Modifier,
