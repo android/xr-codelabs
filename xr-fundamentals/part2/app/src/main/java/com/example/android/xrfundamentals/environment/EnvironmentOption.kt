@@ -17,8 +17,8 @@
 package com.example.android.xrfundamentals.environment
 
 import androidx.xr.runtime.Session
-import androidx.xr.scenecore.ExrImage
 import androidx.xr.scenecore.GltfModel
+import androidx.xr.scenecore.ImageBasedLightingAsset
 import androidx.xr.scenecore.SpatialEnvironment.SpatialEnvironmentPreference
 import kotlin.io.path.Path
 
@@ -28,7 +28,7 @@ data class EnvironmentOption(val name: String, val skyboxPath: String?, val geom
             return null
         } else {
             val skybox = skyboxPath?.let {
-                ExrImage.createFromZip(session, Path(it))
+                ImageBasedLightingAsset.createFromZip(session, Path(it))
             }
 
             val geometry = geometryPath?.let {

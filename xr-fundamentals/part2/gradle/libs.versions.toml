@@ -9,8 +9,8 @@ lifecycleRuntimeKtx = "2.10.0"
 activityCompose = "1.13.0"
 composeBom = "2026.05.00"
 composeMaterialAdaptive = "1.2.0"
-xrCompose = "1.0.0-alpha13"
-xrSceneCore = "1.0.0-alpha14"
+xrCompose = "1.0.0-alpha15"
+xrSceneCore = "1.0.0-alpha16"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

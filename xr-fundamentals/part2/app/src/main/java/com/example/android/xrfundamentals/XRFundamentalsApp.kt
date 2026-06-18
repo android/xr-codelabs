@@ -42,6 +42,8 @@ import androidx.xr.compose.subspace.layout.SubspaceModifier
 import androidx.xr.compose.subspace.layout.height
 import androidx.xr.compose.subspace.layout.movable
 import androidx.xr.compose.subspace.layout.resizable
+import androidx.xr.compose.subspace.layout.transformingMovable
+import androidx.xr.compose.subspace.layout.transformingResizable
 import androidx.xr.compose.subspace.layout.width
 import androidx.xr.scenecore.scene
 import com.example.android.xrfundamentals.environment.ENVIRONMENT_OPTIONS
@@ -147,8 +149,8 @@ fun XRFundamentalsApp(
                 modifier = SubspaceModifier
                     .width(340.dp)
                     .height(800.dp)
-                    .movable()
-                    .resizable(),
+                    .transformingMovable()
+                    .transformingResizable(),
             ) {
                 Surface {
                     SecondaryCardList(
